@@ -1,6 +1,5 @@
 import { Card, CardImg, CardImgOverlay, CardTitle} from 'reactstrap';
 
-
 const RenderMenuItem = ({dish, onClick}) => {
   return(
     <Card onClick={() => onClick(dish.id)}>
