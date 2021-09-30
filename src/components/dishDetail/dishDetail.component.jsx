@@ -18,7 +18,7 @@ const RenderDish =({dish}) => {
         </div>
     );
 }
-const RenderComments = ({comments}) => {
+const RenderComments = ({comments, addComment, dishId}) => {
         if(comments != null)
         return(
             <div  className="col-12 col-md-5 m-1">
@@ -30,7 +30,7 @@ const RenderComments = ({comments}) => {
                             <li key={comment.id}>
                             <p className='mb-0'>{comment.comment}</p>
                             <p>
-                                -- {comment.author}, 
+                                -- {comment.author}, &nbsp;
                                 {new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
                             </p>
                             </li>
@@ -39,7 +39,7 @@ const RenderComments = ({comments}) => {
 
                 }
                 </ul>
-                <CommentForm comments={comments}  />
+                <CommentForm dishId={dishId} addComment={addComment}  />
             </div>
         );
         else 
@@ -61,13 +61,12 @@ class CommentForm extends Component{
             isModalOpen: false
         }
     }
-    toggleNav = () => {
-        this.setState({isNavOpen: !this.state.isNavOpen});
-    }
     toggleModal = () => {
         this.setState({isModalOpen: !this.state.isModalOpen});
     }
     handleSubmit = (values) =>{
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
         console.log('Current State is:' + JSON.stringify(values));
         alert('Current State is:' + JSON.stringify(values));
     }
@@ -84,24 +83,26 @@ class CommentForm extends Component{
                                     <Label htmlFor='rating'>Rating</Label>
                                     <Control.select
                                             model='.rating' 
-                                            id='rating' 
                                             name='rating'
-                                            className="form-control">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                            className="form-control"
+                                            required
+                                            >
+                                        <option value="" selected disabled>Choose here</option>
+                                        <option value='1'>1</option>
+                                        <option value='2'>2</option>
+                                        <option value='3'>3</option>
+                                        <option value='4'>4</option>
+                                        <option value='5'>5</option>
                                     </Control.select>
                                 </Col>
                             </Row>
                             <Row className="form-group">
                                 <Col>
-                                    <Label htmlFor="yourName">First Name</Label>
+                                    <Label htmlFor="author">First Name</Label>
                                     <Control.text 
-                                        model=".yourName" 
-                                        id="yourName" 
-                                        name="yourName"
+                                        model=".author" 
+                                        id="author" 
+                                        name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -110,7 +111,7 @@ class CommentForm extends Component{
                                         />
                                     <Errors
                                         className="text-danger"
-                                        model=".yourName"
+                                        model=".author"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
@@ -122,11 +123,11 @@ class CommentForm extends Component{
                             </Row>
                             <Row className='form-group'>
                             <Col>
-                                <Label htmlFor='message'>Comment</Label>
+                                <Label htmlFor='comment'>Comment</Label>
                                     <Control.textarea
-                                        model='.message'
-                                        id='message'
-                                        name='message'
+                                        model='.comment'
+                                        id='comment'
+                                        name='comment'
                                         placeholder='Type your comment here...'
                                         className="form-control"
                                         rows='6'
@@ -136,7 +137,7 @@ class CommentForm extends Component{
                                     />
                                     <Errors
                                         className="text-danger"
-                                        model=".message"
+                                        model=".comment"
                                         show="touched"
                                         messages={{
                                             required: 'Required',
@@ -157,23 +158,27 @@ class CommentForm extends Component{
     }
 }
 
-const DishDetail = ({dish, comments}) => {
-        if(dish != null)
+const DishDetail = (props) => {
+        if(props.dish != null)
         return(
             <div  className="container">
                 <div className='row'>
                 <Breadcrumb>
                 <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                 <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
-                        <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
                     </Breadcrumb>
                 <div className='col-12'>
-                <h3>{dish.name}</h3>
+                <h3>{props.dish.name}</h3>
                 </div>
             </div>
                 <div className='row'>
-                    <RenderDish dish={dish} />
-                    <RenderComments comments={comments} />
+                    <RenderDish dish={props.dish} />
+                    <RenderComments 
+                        comments={props.comments}
+                        addComment={props.addComment}
+                        dishId={props.dish.id}
+                    />
                 </div>
                 <div className='row'>
 
