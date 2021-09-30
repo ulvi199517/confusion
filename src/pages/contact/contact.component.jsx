@@ -116,7 +116,6 @@ class ContactPage extends Component{
                         <Label htmlFor="telNum" md={2}>Contact Tel.</Label>
                         <Col md={10}>
                             <Control.text model=".telNum" id="telNum" name="telNum"
-                                placeholder="Tel. Number"
                                 className="form-control"
                                 validators={{
                                     required, minLength: minLength(3), maxLength: maxLength(15), isNumber
