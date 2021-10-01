@@ -10,7 +10,7 @@ import AboutPage from '../../pages/about/about.component';
 import {connect} from 'react-redux';
 import {addComment} from '../../redux/comments/comments.action';
 import {dishesLoading, fetchDishes} from '../../redux/dishes/dishes.action';
-
+import {actions} from 'react-redux-form';
 
 class Main extends Component {
 
@@ -55,7 +55,7 @@ class Main extends Component {
         <Route path='/home' component={renderHomePage} />
         <Route exact path='/menu' component={() => <MenuPage dishes={this.props.dishes} />} />
         <Route path='/menu/:dishId' component={DishWithId}/>
-        <Route exact path='/contactus' component={ContactPage} />
+        <Route exact path='/contactus' component={() => <ContactPage resetFeedbackForm={this.props.resetFeedbackForm} />} />} />
         <Route exact path='/aboutus' component={renderAboutUsPage} />
 
           <Redirect to='/home'/>
@@ -77,7 +77,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   addComment: (dishId, rating, author, comment) => 
               dispatch(addComment(dishId, rating, author, comment)),
-  fetchDishes: () => dispatch(fetchDishes())
+  fetchDishes: () => dispatch(fetchDishes()),
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback'))}
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
