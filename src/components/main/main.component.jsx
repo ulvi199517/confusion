@@ -13,6 +13,7 @@ import {fetchDishes} from '../../redux/dishes/dishes.action';
 import { fetchPromos } from '../../redux/promotions/promotions.action';
 import {fetchLeaders} from '../../redux/leaders/leaders.action'
 import {actions} from 'react-redux-form';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 class Main extends Component {
 
@@ -61,15 +62,19 @@ class Main extends Component {
     return(
     <div>
       <Header/>
-        <Switch>
-        <Route path='/home' component={renderHomePage} />
-        <Route exact path='/menu' component={() => <MenuPage dishes={this.props.dishes} />} />
-        <Route path='/menu/:dishId' component={DishWithId}/>
-        <Route exact path='/contactus' component={() => <ContactPage resetFeedbackForm={this.props.resetFeedbackForm} />}/>
-        <Route exact path='/aboutus' component={renderAboutUsPage} />
+      <TransitionGroup>
+        <CSSTransition key={this.props.location.key} classNames='page' typeput={300}>
+          <Switch>
+          <Route path='/home' component={renderHomePage} />
+          <Route exact path='/menu' component={() => <MenuPage dishes={this.props.dishes} />} />
+          <Route path='/menu/:dishId' component={DishWithId}/>
+          <Route exact path='/contactus' component={() => <ContactPage resetFeedbackForm={this.props.resetFeedbackForm} />}/>
+          <Route exact path='/aboutus' component={renderAboutUsPage} />
 
-          <Redirect to='/home'/>
-        </Switch>
+            <Redirect to='/home'/>
+          </Switch>
+        </CSSTransition>
+      </TransitionGroup>
       <Footer/>  
     </div>
 
