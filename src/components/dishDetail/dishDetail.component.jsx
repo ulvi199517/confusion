@@ -21,7 +21,7 @@ const RenderDish =({dish}) => {
         </div>
     );
 }
-const RenderComments = ({comments, addComment, dishId}) => {
+const RenderComments = ({comments, postComment, dishId}) => {
         if(comments != null)
         return(
             <div  className="col-12 col-md-5 m-1">
@@ -42,7 +42,7 @@ const RenderComments = ({comments, addComment, dishId}) => {
 
                 }
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment}  />
+                <CommentForm dishId={dishId} postComment={postComment}  />
             </div>
         );
         else 
@@ -69,9 +69,8 @@ class CommentForm extends Component{
     }
     handleSubmit = (values) =>{
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment)
         console.log('Current State is:' + JSON.stringify(values));
-        alert('Current State is:' + JSON.stringify(values));
     }
     render(){
         return(
@@ -90,7 +89,6 @@ class CommentForm extends Component{
                                             className="form-control"
                                             required
                                             >
-                                        <option value="" selected disabled>Choose here</option>
                                         <option value='1'>1</option>
                                         <option value='2'>2</option>
                                         <option value='3'>3</option>
@@ -135,7 +133,7 @@ class CommentForm extends Component{
                                         className="form-control"
                                         rows='6'
                                         validators={{
-                                            required, minLength: minLength(10), maxLength: maxLength(50)
+                                            required, minLength: minLength(10), maxLength: maxLength(250)
                                         }}
                                     />
                                     <Errors
@@ -145,7 +143,7 @@ class CommentForm extends Component{
                                         messages={{
                                             required: 'Required',
                                             minLength: 'Must be greater than 10 characters',
-                                            maxLength: 'Must be 50 characters or less'
+                                            maxLength: 'Must be 250 characters or less'
                                         }}
                                     />
                                 </Col>        
@@ -195,7 +193,7 @@ const DishDetail = (props) => {
                     <RenderDish dish={props.dish} />
                     <RenderComments 
                         comments={props.comments}
-                        addComment={props.addComment}
+                        postComment={props.postComment}
                         dishId={props.dish.id}
                     />
                 </div>

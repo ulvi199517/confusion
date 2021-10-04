@@ -8,7 +8,7 @@ import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import ContactPage from '../../pages/contact/contact.component';
 import AboutPage from '../../pages/about/about.component';
 import {connect} from 'react-redux';
-import {addComment, fetchComments} from '../../redux/comments/comments.action';
+import {postComment, fetchComments} from '../../redux/comments/comments.action';
 import {fetchDishes} from '../../redux/dishes/dishes.action';
 import { fetchPromos } from '../../redux/promotions/promotions.action';
 import {fetchLeaders} from '../../redux/leaders/leaders.action'
@@ -54,7 +54,7 @@ class Main extends Component {
                     isLoading={this.props.dishes.isLoading}
                     ErrMess={this.props.dishes.errMess}
                     commentsErrMess={this.props.comments.errMess}
-                    addComment={this.props.addComment}
+                    postComment={this.props.postComment}
         />
       );
     }
@@ -85,8 +85,8 @@ const mapStateToProps = (state) => {
   }
 }
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) => 
-              dispatch(addComment(dishId, rating, author, comment)),
+  postComment: (dishId, rating, author, comment) => 
+              dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => dispatch(fetchDishes()),
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
