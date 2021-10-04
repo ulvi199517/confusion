@@ -6,12 +6,13 @@ import { Button, Card, CardImg, CardTitle, CardBody, CardText,
 import {Link} from 'react-router-dom';
 import {Control, LocalForm, Errors} from 'react-redux-form';
 import {Loading} from '../loading/loading.component';
+import {baseUrl} from '../../shared/baseUrl';
 
 const RenderDish =({dish}) => {
     return(
         <div  className="col-12 col-md-5 m-1">
             <Card key={dish.id}>
-                <CardImg width='100%' top src={dish.image} alt={dish.name} />
+                <CardImg width='100%' top src={baseUrl + dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle>{dish.name}</CardTitle>
                     <CardText>{dish.description}</CardText>
@@ -181,7 +182,7 @@ const DishDetail = (props) => {
         return(
             <div  className="container">
                 <div className='row'>
-                <Breadcrumb>
+                <Breadcrumb className='w-100'>
                 <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                 <BreadcrumbItem><Link to='/menu'>Menu</Link></BreadcrumbItem>
                         <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>

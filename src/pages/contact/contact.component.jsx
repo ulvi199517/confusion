@@ -29,7 +29,7 @@ class ContactPage extends Component{
         return(
             <div className="container">
                 <div className='row'>
-                    <Breadcrumb>
+                    <Breadcrumb className='w-100'>
                         <BreadcrumbItem><Link to='/home'>Home</Link></BreadcrumbItem>
                         <BreadcrumbItem active>Contact Us</BreadcrumbItem>
                     </Breadcrumb>

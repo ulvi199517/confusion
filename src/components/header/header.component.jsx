@@ -57,7 +57,7 @@ class Header extends React.Component {
                         </Collapse>
                     </div>
                 </Navbar>
-                <Jumbotron>
+                <Jumbotron className='rounded-0'>
                     <div className="container">
                         <div className="row row-header">
                             <div className="col-12 col-sm-6">

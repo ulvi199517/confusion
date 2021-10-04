@@ -1,12 +1,13 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../../shared/baseUrl';
 
 const RenderLeader = ({lead}) => {
     return(
         <Media className='mb-4'>
         <Media left className='mr-4'>
-          <Media object src={lead.image} alt={lead.name} />
+          <Media object src={baseUrl + lead.image} alt={lead.name} />
         </Media>
         <Media body>
           <Media heading>
@@ -32,8 +33,8 @@ const AboutPage = ({leader}) => {
 
     return(
         <div className="container">
-            <div className="row">
-                <Breadcrumb>
+            <div>
+                <Breadcrumb className='w-100'>
                     <BreadcrumbItem><Link to="/home">Home</Link></BreadcrumbItem>
                     <BreadcrumbItem active>About Us</BreadcrumbItem>
                 </Breadcrumb>
