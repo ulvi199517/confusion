@@ -12,6 +12,7 @@ import {postComment, fetchComments} from '../../redux/comments/comments.action';
 import {fetchDishes} from '../../redux/dishes/dishes.action';
 import { fetchPromos } from '../../redux/promotions/promotions.action';
 import {fetchLeaders} from '../../redux/leaders/leaders.action'
+import {postFeedback} from '../../redux/forms/forms.actions';
 import {actions} from 'react-redux-form';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
@@ -68,7 +69,7 @@ class Main extends Component {
           <Route path='/home' component={renderHomePage} />
           <Route exact path='/menu' component={() => <MenuPage dishes={this.props.dishes} />} />
           <Route path='/menu/:dishId' component={DishWithId}/>
-          <Route exact path='/contactus' component={() => <ContactPage resetFeedbackForm={this.props.resetFeedbackForm} />}/>
+          <Route exact path='/contactus' component={() => <ContactPage resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />}/>
           <Route exact path='/aboutus' component={renderAboutUsPage} />
 
             <Redirect to='/home'/>
@@ -92,6 +93,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = dispatch => ({
   postComment: (dishId, rating, author, comment) => 
               dispatch(postComment(dishId, rating, author, comment)),
+postFeedback: feedback => dispatch(postFeedback(feedback)), 
   fetchDishes: () => dispatch(fetchDishes()),
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos()),
