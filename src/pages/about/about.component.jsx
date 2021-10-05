@@ -2,6 +2,7 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { baseUrl } from '../../shared/baseUrl';
+import {Fade, Stagger} from 'react-animation-components';
 
 const RenderLeader = ({lead}) => {
     return(
@@ -21,16 +22,7 @@ const RenderLeader = ({lead}) => {
       </Media>
     )
 }
-const AboutPage = ({leader}) => {
-
-    const leaders = leader.map(lead => (
-        <div key={lead.id} className="col-12 col-md-12 m-1">
-            <RenderLeader lead={lead} />
-        </div>
-    ))
-        
-
-
+const AboutPage = ({leaders}) => {
     return(
         <div className="container">
             <div>
@@ -87,7 +79,15 @@ const AboutPage = ({leader}) => {
                 </div>
                 <div className="col-12">
                     <Media list>
-                        {leaders}
+                        <Stagger in>
+                        { leaders.map(lead => (
+                            <Fade in key={lead.id}>
+                                <div  className="col-12 col-md-12 m-1">
+                                    <RenderLeader lead={lead} />
+                                </div>
+                            </Fade>
+                        ))}
+                        </Stagger>
                     </Media>
                 </div>
             </div>

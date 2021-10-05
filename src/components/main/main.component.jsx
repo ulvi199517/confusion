@@ -44,7 +44,7 @@ class Main extends Component {
     }
     const renderAboutUsPage = () => {
       return(
-        <AboutPage leader={this.props.leaders.leaders}
+        <AboutPage leaders={this.props.leaders.leaders}
         />
       )
     }
@@ -63,7 +63,7 @@ class Main extends Component {
     <div>
       <Header/>
       <TransitionGroup>
-        <CSSTransition key={this.props.location.key} classNames='page' typeput={300}>
+        <CSSTransition key={this.props.location.key} classNames='page' timeout={300}>
           <Switch>
           <Route path='/home' component={renderHomePage} />
           <Route exact path='/menu' component={() => <MenuPage dishes={this.props.dishes} />} />
